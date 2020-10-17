@@ -51,7 +51,7 @@
               <div class="quality-wrapper mt-30 product-quantity">
                 <label>Qty:</label>
                 <div class="cart-plus-minus">
-                  <input class="cart-plus-minus-box js_amount-input" type="text" name="qtybutton"
+                  <input class="cart-plus-minus-box js_amount-input" type="text" name="qtybutton" autocomplete="off"
                          value="{{ $item["amount"] ?? 0 }}">
                 </div>
               </div>
