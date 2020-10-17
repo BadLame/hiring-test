@@ -1,16 +1,16 @@
 <?php
 
-namespace App\SessionModels;
+namespace App\Models\Basket;
 
 use Exception;
 
-class SessionBasket implements BasketInterface
+final class SessionBasket implements ItemsBasket
 {
-    /** @var string Session key */
-    protected $basket_name;
+    /** @var string Session cart key */
+    private const SESSION_KEY = "session_basket";
 
     /** @var array Замена соединению с базой данных [ sku => data[], ... ] */
-    protected $mock_db = [
+    protected array $mock_db = [
         "MS04" => [
             "title" => "Dog Calcium Food",
             "price" => 20.00
@@ -30,12 +30,10 @@ class SessionBasket implements BasketInterface
     ];
 
 
-    public function __construct($basket_name)
+    public function __construct()
     {
-        $this->basket_name = $basket_name;
-
-        if (!session($basket_name))
-            session([$basket_name => []]);
+        if (!session(self::SESSION_KEY))
+            session([self::SESSION_KEY => []]);
     }
 
 
@@ -50,7 +48,7 @@ class SessionBasket implements BasketInterface
         $items[$sku]["amount"] = $amount;
         $items[$sku]["subtotal"] = (float)($items[$sku]["price"] * $amount);
 
-        session([$this->basket_name => $items]);
+        session([self::SESSION_KEY => $items]);
 
         return $items;
     }
@@ -66,7 +64,7 @@ class SessionBasket implements BasketInterface
 
     public function getItems(): array
     {
-        $items = session($this->basket_name);
+        $items = session(self::SESSION_KEY);
         return $items ?? [];
     }
 
@@ -81,7 +79,7 @@ class SessionBasket implements BasketInterface
 
         $items[$sku]["amount"] = $amount;
         $items[$sku]["subtotal"] = $items[$sku]["price"] * $amount;
-        session([$this->basket_name => $items]);
+        session([self::SESSION_KEY => $items]);
 
         return $items;
     }
@@ -91,7 +89,7 @@ class SessionBasket implements BasketInterface
     {
         $items = $this->getItems();
         unset($items[$sku]);
-        session([$this->basket_name => $items]);
+        session([self::SESSION_KEY => $items]);
 
         return $items;
     }
@@ -101,7 +99,7 @@ class SessionBasket implements BasketInterface
     {
         $items = $this->getItems();
 
-        session([$this->basket_name => []]);
+        session([self::SESSION_KEY => []]);
 
         return $items;
     }

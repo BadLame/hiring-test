@@ -90,8 +90,8 @@
                           beforeSend: beforeSend.bind(this, $item),
                           complete: complete.bind(this, $item),
                           error: response => {
-                              // console.log('error', response)
-                              alert(response.responseJSON.alert)
+                              console.log('error', response)
+                              // alert(response.alert)
                           },
                           success: response => {
                               // console.log(response)

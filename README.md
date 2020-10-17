@@ -21,3 +21,14 @@
 4) `cp .env.example .env`
 5) `php artisan key:generate`
 6) `php artisan serve`
+
+Структура:
+- `/app/Http/Controllers/BasketController` - контроллер, отвечающий за все роуты в данном приложении (кроме индексного)
+- `/app/Models/Basket/ItemsBasket` - интерфейс взаимодействия с корзиной 
+- `/app/Models/Basket/SessionBasket` - реализация на основе сессии
+- `/routes/web.php` и `/routes/api.php` - соответственно, роуты
+- `/app/Providers/AppServiceProvider` - файл для регистрации отношения интерфейс - класс для DI
+
+
+- Базовый JS и CSS для всех страниц webpack компилирует в `app.js` и `app.css` из `/resources` в `/public`, прочие ресурсы копируются в `/public` как есть
+- Шаблоны страниц, компонентов, дополнительные скрипты на jQuery - в `/resources/views`

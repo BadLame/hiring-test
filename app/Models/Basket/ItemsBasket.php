@@ -1,8 +1,8 @@
 <?php
 
-namespace App\SessionModels;
+namespace App\Models\Basket;
 
-interface BasketInterface
+interface ItemsBasket
 {
     /**
      * Add item to cart

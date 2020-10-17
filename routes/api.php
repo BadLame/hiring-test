@@ -20,11 +20,9 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::get("/basket/add/{sku}", [BasketController::class, "addItem"]);
-Route::get("/basket/add/{sku}/{amount}", [BasketController::class, "addItem"])
-    ->where("amount", "[0-9]+");
+Route::get("/basket/add/{sku}/{amount}", [BasketController::class, "addItem"]);
 
-Route::get("/basket/change_amount/{sku}/{amount}", [BasketController::class, "changeItemAmount"])
-    ->where("amount", "[0-9]+");
+Route::get("/basket/change_amount/{sku}/{amount}", [BasketController::class, "changeItemAmount"]);
 
 Route::get("/basket/remove/{sku}", [BasketController::class, "removeItem"]);
 Route::get("/basket/remove_all/", [BasketController::class, "removeAll"]);

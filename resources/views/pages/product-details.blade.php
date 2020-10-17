@@ -84,32 +84,33 @@
           e.preventDefault();
           // console.log(e.target)
 
-          let $amountInput = $(".js_amount-input"),
+          let $amount = $(".js_amount-input"),
               $message = $(".js_in-stock-message"),
-              sku = e.target.dataset.sku,
-              url = `/api/basket/add/${sku}/${$amountInput.val()}`;
+              sku = e.target.dataset.sku
 
-          if ($amountInput.val() < 1) {
+          if ($amount.val() < 1) {
               $message.text("You can't add item with zero amount to stock")
                   .addClass("text-danger").removeClass(["text-muted", "text-success"])
               return;
           }
 
           $.ajax({
-              url: url,
+              url: `/api/basket/add/${sku}/${$amount.val()}`,
+              // url: `/api/basket/add/0/${amount}`,
               beforeSend: () => {
                   $message.html(`<img src="{{ asset("/img/loading.gif") }}">`)
               }, // animated loading
               error: response => {
-                  // console.log(data)
+                  // console.log(response)
                   $message.text(response.responseJSON.message)
                       .addClass("text-danger").removeClass(["text-muted", "text-success"])
               }, // error message
               success: response => {
-                  // console.log(data)
+                  // console.log(response)
+                  $amount.val(response.amount)
                   $message.text(response.message)
                       .addClass("text-success").removeClass(["text-muted", "text-danger"])
-              },
+              }, // success message
           })
       });
   </script>

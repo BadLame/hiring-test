@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\SessionModels\SessionBasket;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use App\Models\Basket\ItemsBasket;
+use Exception;
 
 class BasketController extends Controller
 {
-    /** @var SessionBasket */
-    private $basket;
-
     /** @var array Замена соединению с базой данных [ sku => data[], ... ] */
-    protected $mock_db = [
+    protected array $mock_db = [
         "MS04" => [
             "title" => "Dog Calcium Food",
             "price" => 20.00
@@ -30,11 +26,12 @@ class BasketController extends Controller
             "price" => 170.00
         ]
     ];
+    /** @var ItemsBasket */
+    private ItemsBasket $basket;
 
-
-    public function __construct()
+    public function __construct(ItemsBasket $basket)
     {
-        $this->basket = new SessionBasket("qwerty");
+        $this->basket = $basket;
     }
 
 
@@ -64,17 +61,20 @@ class BasketController extends Controller
 
 // ==================================================================
 // ======================= Ajax area ================================
-    public function addItem(string $sku, int $amount = 1)
+    public function addItem(string $sku, $amount = 1)
     {
+        if (! is_numeric($amount) || $amount < 1)
+            $amount = 1;
         // if item with this $sku not in database
         try {
             $this->basket->addItem($sku, $amount);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], 404);
         }
 
         return response()->json([
             "message" => "In Stock",
+            "amount" => $amount
         ], 200);
     }
 
@@ -84,14 +84,14 @@ class BasketController extends Controller
         return $this->jsonHtml($this->basket->getItems());
     }
 
-
-    public function changeItemAmount(string $sku, int $amount)
+    public function changeItemAmount(string $sku, $amount)
     {
-        if ($amount < 1) $amount = 1;
+        if (!is_numeric($amount) || $amount < 1)
+            $amount = 1;
 
         try {
             $items = $this->basket->changeAmount($sku, $amount);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 "alert" => "Item doesn't exists"
             ], 404);
