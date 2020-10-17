@@ -82,7 +82,7 @@
   <script>
       $(".js_add-btn").click(e => {
           e.preventDefault();
-          console.log(e.target)
+          // console.log(e.target)
 
           let $amountInput = $(".js_amount-input"),
               $message = $(".js_in-stock-message"),
@@ -100,14 +100,14 @@
               beforeSend: () => {
                   $message.html(`<img src="{{ asset("/img/loading.gif") }}">`)
               }, // animated loading
-              error: data => {
-                  console.log(data)
-                  $message.text(data.responseJSON.message)
+              error: response => {
+                  // console.log(data)
+                  $message.text(response.responseJSON.message)
                       .addClass("text-danger").removeClass(["text-muted", "text-success"])
               }, // error message
-              success: data => {
-                  console.log(data)
-                  $message.text(data.message)
+              success: response => {
+                  // console.log(data)
+                  $message.text(response.message)
                       .addClass("text-success").removeClass(["text-muted", "text-danger"])
               },
           })

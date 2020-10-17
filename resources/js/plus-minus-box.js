@@ -10,7 +10,7 @@ window.initPlusMinusBox = function () {
         var $button = $(this);
         var oldValue = parseFloat( $button.parent().find("input").val() );
 
-        console.log($button.text() === "+" ? "increment" : "decrement")
+        // console.log($button.text() === "+" ? "increment" : "decrement")
         // Don't allow decrementing to zero
         if ($button.text() === "+") {
              newVal = oldValue + 1;

@@ -90,12 +90,12 @@
                           beforeSend: beforeSend.bind(this, $item),
                           complete: complete.bind(this, $item),
                           error: response => {
-                              console.log('error', response)
-                              alert(response.alert)
+                              // console.log('error', response)
+                              alert(response.responseJSON.alert)
                           },
                           success: response => {
                               // console.log(response)
-                              console.log("success")
+                              // console.log("success")
                               window.refreshList(response.html)
                           },
                       })
@@ -114,7 +114,7 @@
                           console.log(response)
                       },
                       success: response => {
-                          console.log("successfully removed")
+                          // console.log("successfully removed")
                           window.refreshList(response.html)
                       }
                   })
