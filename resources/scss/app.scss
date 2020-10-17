@@ -1,0 +1,17 @@
+@import "../css/bootstrap.min.css";
+@import "../css/simple-line-icons.css";
+@import "../css/themify-icons.css";
+@import "../css/style.css";
+@import "../css/responsive.css";
+
+// Фикс, чтобы прижать футер к низу при малом кол-ве контента
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.footer-area {
+  margin-top: auto;
+}
