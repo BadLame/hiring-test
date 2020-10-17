@@ -58,7 +58,6 @@ class SessionBasket
         $items[$sku]["subtotal"] = (float)($items[$sku]["price"] * $amount);
 
         session([$this->basket_name => $items]);
-        session()->save();
 
         return $items;
     }
