@@ -4,7 +4,7 @@ namespace App\SessionModels;
 
 use Exception;
 
-class SessionBasket
+class SessionBasket implements BasketInterface
 {
     /** @var string Session key */
     protected $basket_name;
@@ -38,14 +38,7 @@ class SessionBasket
             session([$basket_name => []]);
     }
 
-    /**
-     * Add item to basket
-     *
-     * @param string $sku
-     * @param int $amount
-     * @return array
-     * @throws Exception
-     */
+
     public function addItem(string $sku, int $amount = 1): array
     {
         $items = $this->getItems();
@@ -62,12 +55,7 @@ class SessionBasket
         return $items;
     }
 
-    /**
-     * Get item if the basket containing it
-     *
-     * @param $sku
-     * @return array|null
-     */
+
     public function getItem($sku): ?array
     {
         $items = $this->getItems();
@@ -75,25 +63,14 @@ class SessionBasket
         return @$items[$sku] ?? null;
     }
 
-    /**
-     * Get all basket items
-     *
-     * @return array
-     */
+
     public function getItems(): array
     {
         $items = session($this->basket_name);
         return $items ?? [];
     }
 
-    /**
-     * Change item amount
-     *
-     * @param string $sku
-     * @param int $amount
-     * @return array
-     * @throws Exception
-     */
+
     public function changeAmount(string $sku, int $amount): array
     {
         $items = $this->getItems();
@@ -109,12 +86,7 @@ class SessionBasket
         return $items;
     }
 
-    /**
-     * Remove item from basket
-     *
-     * @param string $sku
-     * @return array
-     */
+
     public function removeItem(string $sku): array
     {
         $items = $this->getItems();
@@ -124,11 +96,7 @@ class SessionBasket
         return $items;
     }
 
-    /**
-     * Get all basket items and clear basket session array
-     *
-     * @return array|string[]
-     */
+
     public function flush(): array
     {
         $items = $this->getItems();
